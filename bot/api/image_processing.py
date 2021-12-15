@@ -6,7 +6,6 @@ def crop_image(input_image, coords, cropped_image):
     croped_sneaker = Image.open(input_image)
     croped_sneaker = croped_sneaker.crop((x, y, x + w, y + h))
     resized_image = croped_sneaker.resize((224, 224))
-    # rescaled_image = 
     resized_image.save(cropped_image)
 
 def get_data(path_to_result_file):

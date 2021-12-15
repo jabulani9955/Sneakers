@@ -7,8 +7,6 @@ import numpy as np
 from operator import itemgetter
 
 DARKNET_PATH = "/home/jabulani/Final_Project/bot/api/darknet/"
-# RESULT_PATH = "/home/jabulani/Final_Project/bot/api/result.txt"
-# IMAGE_FILE_PATH = "/home/jabulani/Final_Project/bot/api/image_file.txt"
 
 
 class BashmakModel:
@@ -61,7 +59,7 @@ class BashmakModel:
         x = np.expand_dims(x, axis=0)
 
         preds = model.predict(x)
-        sorted_preds = list(reversed(np.argsort(preds, axis=1)[:,-4:][0]))
+        sorted_preds = list(reversed(np.argsort(preds, axis=1)[:, -4:][0]))
 
         labels = list(train_generator_classes.keys())
         selector = itemgetter(*sorted_preds)

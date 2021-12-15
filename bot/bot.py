@@ -52,22 +52,17 @@ async def handle_photo_for_prediction(message):
         message_id = message.message_id
 
         # Отправка стикера во время предсказания
-        # await bot.send_sticker(user_id, STICKER1)
         await bot.send_video(chat_id, video=open('/home/jabulani/Final_Project/data/video.mp4', 'rb'))
-        # await bot.send_animation(chat_id, '/home/jabulani/Final_Project/data/video.gif')
-
 
         # Define input photo local path
         input_photo_name = '/home/jabulani/Final_Project/data/images/input/sneaker_%s_%s.jpg' % (user_id, message_id)
 
-        # await message.reply('Trying download image...')
         await message.photo[-1].download(input_photo_name) # extract photo for further procceses
 
         ouput_photo_name = '/home/jabulani/Final_Project/data/images/output/photo_%s_%s.jpg' % (user_id, message_id)
 
         model = BashmakModel(input_photo_name)
         model.get_yolo_prediction()
-        # await message.reply('Downloaded!')
         
         
         await bot.send_photo(chat_id, photo=open('/home/jabulani/Final_Project/predictions.jpg', 'rb'), caption='Ура, кроссовки найдены! Предсказываю модель кроссовок...')
@@ -79,15 +74,8 @@ async def handle_photo_for_prediction(message):
         await bot.send_video(chat_id, video=open('/home/jabulani/Final_Project/data/video.mp4', 'rb'))
 
         output_text = model.get_resnet_prediction(ouput_photo_name)
-        # image_file = '/home/jabulani/Final_Project/bot/api/image_file.txt'
+
         img1, img2, img3, img4 = output_text
-        # with open(image_file, 'w') as w_file:
-        #     w_file.write(input_photo_name)
-
-        # Output photo local path``
-
-        # keyboard = InlineKeyboardMarkup()
-        # await bot.send_message(chat_id, output_text)
         first = KeyboardButton(text=img1)
         second = KeyboardButton(text=img2)
         thrird = KeyboardButton(text=img3)
@@ -96,16 +84,6 @@ async def handle_photo_for_prediction(message):
         inline_kb = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1).add(first, second, thrird, fourth)
 
         await bot.send_photo(chat_id, photo=open(input_photo_name, 'rb'), caption='Вуаля!', reply_markup=inline_kb)
-        # await bot.send_photo(chat_id, photo=open(ouput_photo_name, 'rb'), caption='Вуаля!', reply_markup= keyboard)
-        
-
-        # YOLO predictions
-        # w, h = resize_image(input_photo_name, ouput_photo_name)
-        # result, result_photo = get_predict(ouput_photo_name)
-        # restore_image(result_photo, result_photo, w, h)
-        # start_model(image_file, ouput_photo_name)
-        
-        # await bot.send_photo(chat_id, photo=open(ouput_photo_name, 'rb'), caption='Удалось?')
     else:
         await message.reply("Пожалуйста, пришли одну фотографию, а не вот столько!")
 
