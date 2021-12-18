@@ -50,7 +50,7 @@ class BashmakModel:
             'Reebok_Instapump_Fury': 18,
             'Unknown': 19
         }
-        
+
         model = load_model('/home/jabulani/Final_Project/bot/api/checkpoint')
         
         img = image.load_img(processed_image, target_size=(224, 224))
